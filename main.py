@@ -20,11 +20,22 @@ class HairColor(Enum):
 
 
 class Person(BaseModel):
-    first_name: str = Field(..., min_length=1, max_length=50)
+    first_name: str = Field(..., min_length=1, max_length=50, example="Juliana")
     last_name: str = Field(..., min_length=1, max_length=50)
     age: int = Field(..., gt=0, le=115)
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "first_name": "Emma",
+                "last_name": "Gachancipa",
+                "age": 20,
+                "hair_color": "brown",
+                "is_married": False,
+            }
+        }
 
 
 class Location(BaseModel):
@@ -89,8 +100,8 @@ def update_person(
         ..., title="Person ID", description="This is the person ID", gt=0
     ),
     person: Person = Body(...),
-    location: Location = Body(...),
+    # location: Location = Body(...),
 ):
     result = person.dict()
-    result.update(location.dict())
+    # result.update(location.dict())
     return result
