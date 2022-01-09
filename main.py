@@ -68,9 +68,13 @@ def show_person(
         max_length=50,
         title="Person Name",
         description="This is the person name. It's between 1 and 50 characters",
+        example="Laura",
     ),
     age: Optional[str] = Query(
-        ..., title="Peson Age", description="This is the person age. It's required"
+        ...,
+        title="Peson Age",
+        description="This is the person age. It's required",
+        example=18,
     ),
 ):
     return {name: age}
@@ -86,6 +90,7 @@ def show_person(
         gt=0,
         title="Person ID",
         description="This is the person age. It's required",
+        example=5,
     )
 ):
     return {person_id: "It exists!"}
@@ -97,7 +102,7 @@ def show_person(
 @app.put("/person/{person_id}")
 def update_person(
     person_id: int = Path(
-        ..., title="Person ID", description="This is the person ID", gt=0
+        ..., title="Person ID", description="This is the person ID", gt=0, example=7
     ),
     person: Person = Body(...),
     # location: Location = Body(...),
